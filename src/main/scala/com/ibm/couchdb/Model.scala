@@ -111,6 +111,6 @@ case class CouchDesign(
     signatures: Map[String, String] = Map.empty[String, String])
 
 case class CouchException[D](content: D) extends Throwable {
-  override def toString: String = "CouchException: " + content
+  override def toString: String = "CouchException: " + content.toString
 }
 

@@ -50,7 +50,7 @@ class Documents(client: Client, db: String, typeMapping: TypeMapping) {
       case None =>
         val cl = obj.getClass.getCanonicalName
         Res.Error(
-          "cannot_create", "No type mapping for " + cl + " available: " + typeMapping).toTask
+          "cannot_create", "No type mapping for " + cl + " available: " + typeMapping.toString).toTask
     }
   }
 
@@ -67,7 +67,7 @@ class Documents(client: Client, db: String, typeMapping: TypeMapping) {
   private def create[D: W, S](objs: Seq[(String, D)]): Task[Seq[Res.DocOk]] = {
     objs.find { x => !typeMapping.contains(x._2.getClass) } match {
       case Some(missing) =>
-        Res.Error("cannot_create", "No type mapping for " + missing).toTask
+        Res.Error("cannot_create", "No type mapping for " + missing.toString).toTask
       case None =>
         postBulk(
           objs.map { o => CouchDoc[D](
